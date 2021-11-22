@@ -22,7 +22,7 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 {
 	ListNode *temp;
 
-	if(!pList || &element == NULL) //&element?
+	if(!pList || &element == NULL)
 		return (NULL);
 	if (position < 0 || position > pList->currentElementCount)
 		return (NULL);
@@ -32,6 +32,7 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
 	element.pLink = temp->pLink->pLink;
 	temp->pLink = &element;
 	pList->currentElementCount++;
+	return (TRUE);
 }
 
 int removeLLElement(LinkedList* pList, int position)
@@ -47,9 +48,10 @@ int removeLLElement(LinkedList* pList, int position)
 	while(position--)
 		temp = temp->pLink;
 	delnode = temp->pLink;
-	temp->pLink = temp->pLink->pLink; //delnode->pLink로 바꿀 수 있음
+	temp->pLink = delnode->pLink;
 	free(delnode);
 	pList->currentElementCount--;
+	return (TRUE);
 }
 
 ListNode* getLLElement(LinkedList* pList, int position)
@@ -65,6 +67,7 @@ ListNode* getLLElement(LinkedList* pList, int position)
 	while(position--)
 		temp = temp->pLink;
 	return (temp);
+	//리턴값을 따로 선언해야하나요?
 }
 
 void clearLinkedList(LinkedList* pList)

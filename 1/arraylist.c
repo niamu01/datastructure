@@ -9,11 +9,14 @@ ArrayList* createArrayList(int maxElementCount)
 
 	if (maxElementCount < 0)
 		return (NULL);
-	if (!(array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode) * maxElementCount))) //pElement에만 말록하면 안되고 array전체에 malloc해야함
+	if (!(array = (ArrayList *)malloc(sizeof(ArrayList))))
 		return (NULL);
+	//array로 선언을하고 malloc없이 &array반환하는것은 불가능한지!
 	array->currentElementCount = 0;
 	array->maxElementCount = maxElementCount; 
-	//pElement에도 값이 들어가 있어야함 (NULL)
+	if (!(array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode) * array->maxElementCount)))
+		return (NULL);
+	//pElement에 0으로 채워져야하나요?
 	return (array);
 }
 
@@ -22,7 +25,7 @@ void deleteArrayList(ArrayList* pList)
 	if (!pList)
 		return (NULL);
 	free(pList->pElement);
-	//pList도 free해야함!!
+	free(pList);
 }
 
 int isArrayListFull(ArrayList* pList)
@@ -38,10 +41,12 @@ int addALElement(ArrayList* pList, int position, ArrayListNode element)
 {
 	int i = pList->currentElementCount - 1;
 
-	if(!pList || &element == NULL) //&element? //element대신 isArrayListFull로 검사
+	if(!pList || &element == NULL)
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
+	if (isArrayListFull(pList))
+		return (FALSE);
 	while (i > position)
 	{
 		pList->pElement[i] = pList->pElement[i - 1];
@@ -54,14 +59,14 @@ int addALElement(ArrayList* pList, int position, ArrayListNode element)
 
 int removeALElement(ArrayList* pList, int position)
 {
-	int i = 0;
+	int i = position;
 	if(!pList)
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
-	while(i + position < pList->currentElementCount - 1)
+	while(i < pList->currentElementCount - 1)
 	{
-		pList->pElement[position + i] = pList->pElement[position + i + 1];
+		pList->pElement[i] = pList->pElement[i + 1];
 		i++;
 	}
 	pList->currentElementCount--;
@@ -81,11 +86,10 @@ void displayArrayList(ArrayList* pList)
 {
 	if(!pList)
 		return (NULL);
-	printf("최대 원소 개수:%d\n", pList->maxElementCount);
-	printf("현재 원소 개수:%d\n", pList->currentElementCount);
+	printf("MAX ELEMENT COUNT:%d\n", pList->maxElementCount);
+	printf("CURRENT ELEMENT COUNT:%d\n", pList->currentElementCount);
 	for (int i = 0; i < pList->currentElementCount; i++)
 		printf("pElement[%d]: %d\n", i, pList->pElement[i].data);
-	//empty의 경우?
 }
 
 void clearArrayList(ArrayList* pList)
