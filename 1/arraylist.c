@@ -21,10 +21,11 @@ ArrayList* createArrayList(int maxElementCount)
 
 	if (maxElementCount < 0)
 		return (NULL);
-	if (!(array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode) * maxElementCount)))
+	if (!(array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode) * maxElementCount))) //pElement에만 말록하면 안되고 array전체에 malloc해야함
 		return (NULL);
 	array->currentElementCount = 0;
-	array->maxElementCount = maxElementCount;
+	array->maxElementCount = maxElementCount; 
+	//pElement에도 값이 들어가 있어야함 (NULL)
 	return (array);
 }
 
@@ -33,6 +34,7 @@ void deleteArrayList(ArrayList* pList)
 	if (!pList)
 		return (NULL);
 	free(pList->pElement);
+	//pList도 free해야함!!
 }
 
 int isArrayListFull(ArrayList* pList)
@@ -48,7 +50,7 @@ int addALElement(ArrayList* pList, int position, ArrayListNode element)
 {
 	int i = pList->currentElementCount - 1;
 
-	if(!pList || &element == NULL) //&element?
+	if(!pList || &element == NULL) //&element? //element대신 isArrayListFull로 검사
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
@@ -95,6 +97,7 @@ void displayArrayList(ArrayList* pList)
 	printf("현재 원소 개수:%d\n", pList->currentElementCount);
 	for (int i = 0; i < pList->currentElementCount; i++)
 		printf("pElement[%d]: %d\n", i, pList->pElement[i].data);
+	//empty의 경우?
 }
 
 void clearArrayList(ArrayList* pList)
