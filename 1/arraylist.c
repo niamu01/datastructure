@@ -1,6 +1,7 @@
 #include "arraylist.h"
-#include <stddef.h> //NULL == 0
-#include <stdio.h>
+#include <string.h> //NULL
+#include <stdlib.h> //malloc
+#include <stdio.h> //printf
 
 typedef struct ArrayListNodeType
 {
@@ -83,7 +84,7 @@ ArrayListNode* getALElement(ArrayList* pList, int position)
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
-	return (&pList->pElement[position]);
+	return (&(pList->pElement)[position]);
 }
 
 void displayArrayList(ArrayList* pList)

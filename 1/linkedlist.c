@@ -1,18 +1,8 @@
 #include "linkedlist.h"
-#include <stddef.h> //NULL == 0
+#include <string.h> //NULL
+#include <stdlib.h> //malloc
 
-typedef struct ListNodeType
-{
-	int data;
-	struct ListNodeType* pLink;
-} ListNode;
-
-typedef struct LinkedListType
-{
-	int currentElementCount;	// 현재 저장된 원소의 개수
-	ListNode headerNode;		// 헤더 노드(Header Node)
-} LinkedList;
-
+//headernode는 변경되면 안되는 것인지?
 
 LinkedList* createLinkedList()
 {
@@ -28,14 +18,15 @@ LinkedList* createLinkedList()
 }
 
 int addLLElement(LinkedList* pList, int position, ListNode element)
+//element를 nownode에 넣어 list단위에서 pLink를 관리하면 편함
 {
 	ListNode *temp;
 
 	if(!pList || &element == NULL) //&element?
 		return (NULL);
-	if (position < 0 || position >= pList->currentElementCount)
+	if (position < 0 || position > pList->currentElementCount)
 		return (NULL);
-	temp = &pList->headerNode;
+	temp = &(pList->headerNode);
 	while(position--)
 		temp = temp->pLink;
 	element.pLink = temp->pLink->pLink;
@@ -52,11 +43,11 @@ int removeLLElement(LinkedList* pList, int position)
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
-	temp = &pList->headerNode;
+	temp = &(pList->headerNode);
 	while(position--)
 		temp = temp->pLink;
 	delnode = temp->pLink;
-	temp->pLink = temp->pLink->pLink;
+	temp->pLink = temp->pLink->pLink; //delnode->pLink로 바꿀 수 있음
 	free(delnode);
 	pList->currentElementCount--;
 }
@@ -69,7 +60,7 @@ ListNode* getLLElement(LinkedList* pList, int position)
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
-	temp = &pList->headerNode;
+	temp = &(pList->headerNode);
 	position++;
 	while(position--)
 		temp = temp->pLink;
