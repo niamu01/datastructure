@@ -1,4 +1,6 @@
 #include "arraylist.h"
+#include <stddef.h> //NULL == 0
+#include <stdio.h>
 
 typedef struct ArrayListNodeType
 {
@@ -14,73 +16,97 @@ typedef struct ArrayListType
 
 ArrayList* createArrayList(int maxElementCount)
 {	
-	int i = 0;
 	ArrayList *array;
 
-	while(maxElementCount--)
-	{
-		array.pElement[i++].data = NULL;
-	}
+	if (maxElementCount < 0)
+		return (NULL);
+	if (!(array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode) * maxElementCount)))
+		return (NULL);
+	array->currentElementCount = 0;
+	array->maxElementCount = maxElementCount;
 	return (array);
 }
 
 void deleteArrayList(ArrayList* pList)
 {
-	int i = 0;
-	while(pList)
-	{
-		pList[i++] = NULL;
-	}
+	if (!pList)
+		return (NULL);
+	free(pList->pElement);
 }
 
-int isArrayListFull(ArrayList* pList);
+int isArrayListFull(ArrayList* pList)
+{
+	if (!pList)
+		return (NULL);
+	if (pList->maxElementCount == pList->currentElementCount)
+		return (TRUE);
+	return (FALSE);
+}
 
 int addALElement(ArrayList* pList, int position, ArrayListNode element)
 {
-	int i = 0;
-	int length;
+	int i = pList->currentElementCount - 1;
 
-	length = getArrayListLength(pList) - 1;
-	while (pList[position])
+	if(!pList || &element == NULL) //&element?
+		return (NULL);
+	if (position < 0 || position >= pList->currentElementCount)
+		return (NULL);
+	while (i > position)
 	{
-		pList[length + 1 - i] = pList[length - i];
-		i++;
+		pList->pElement[i] = pList->pElement[i - 1];
+		i--;
 	}
-	pList[position] = element;
-	return (0); // 무엇을 반환하는지>??
+	pList->pElement[position] = element;
+	pList->currentElementCount++;
+	return (TRUE);
 }
 
 int removeALElement(ArrayList* pList, int position)
 {
 	int i = 0;
-
-	pList[position] = NULL;
-	while(pList[position + i])
+	if(!pList)
+		return (NULL);
+	if (position < 0 || position >= pList->currentElementCount)
+		return (NULL);
+	while(i + position < pList->currentElementCount - 1)
 	{
-		pList[position + i] = pList[position + i + 1];
+		pList->pElement[position + i] = pList->pElement[position + i + 1];
 		i++;
 	}
+	pList->currentElementCount--;
+	return (TRUE);
 }
 
 ArrayListNode* getALElement(ArrayList* pList, int position)
 {
-	return (pList[position]);
+	if(!pList)
+		return (NULL);
+	if (position < 0 || position >= pList->currentElementCount)
+		return (NULL);
+	return (&pList->pElement[position]);
 }
 
-void displayArrayList(ArrayList* pList); //아예 지우고 이걸로 바꾸는건지 position이 왜 없지
+void displayArrayList(ArrayList* pList)
+{
+	if(!pList)
+		return (NULL);
+	printf("최대 원소 개수:%d\n", pList->maxElementCount);
+	printf("현재 원소 개수:%d\n", pList->currentElementCount);
+	for (int i = 0; i < pList->currentElementCount; i++)
+		printf("pElement[%d]: %d\n", i, pList->pElement[i].data);
+}
 
 void clearArrayList(ArrayList* pList)
 {
-	pList[i++] = NULL; ... //delete와 clear의 차이
+	if(!pList)
+		return (NULL);
+	for (int i = pList->currentElementCount - 1; i >= 0; i--)
+		removeALElement(pList, i);
 }
 
 int getArrayListLength(ArrayList* pList)
 {
-	int length = 0;
-
-	while(pList)
-	{
-		pList[length++];
-	}
-	return (length);
+	if(!pList)
+		return (NULL);
+	return (pList->currentElementCount);
 }

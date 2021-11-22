@@ -14,62 +14,89 @@ typedef struct LinkedListType
 } LinkedList;
 
 
-LinkedList* createLinkedList() //node한개생성인지 노드2개리스트1개인지..!
+LinkedList* createLinkedList()
 {
-	ListNode	*node;
+	LinkedList	*list;
 
-	node = malloc(sizeof(LinkedList));
-	node->data = NULL;
-	node->pLink = NULL;
-	return (node);
+	if (!(list = (LinkedList *)malloc(sizeof(LinkedList))))
+		return (NULL);
+	list->headerNode.data = NULL;
+	list->headerNode.pLink = NULL;
+	list->currentElementCount = 0;
+	
+	return (list);
 }
-//data, nextlink 모두 NULL인 노드 하나
 
-int addLLElement(LinkedList* pList, int position, ListNode element);
+int addLLElement(LinkedList* pList, int position, ListNode element)
 {
+	ListNode *temp;
+
+	if(!pList || &element == NULL) //&element?
+		return (NULL);
+	if (position < 0 || position >= pList->currentElementCount)
+		return (NULL);
+	temp = &pList->headerNode;
 	while(position--)
-		pList->headerNode->data = pList->headerNode->pLink;
-	temp->data = pList->headerNode->data;
-	pList->headerNode->data = element->data;
-	element->pLink = temp->data;
-	pList->currentElementCount += 1;
+		temp = temp->pLink;
+	element.pLink = temp->pLink->pLink;
+	temp->pLink = &element;
+	pList->currentElementCount++;
 }
 
 int removeLLElement(LinkedList* pList, int position)
 {
+	ListNode *temp;
+	ListNode *delnode;
+
+	if(!pList)
+		return (NULL);
+	if (position < 0 || position >= pList->currentElementCount)
+		return (NULL);
+	temp = &pList->headerNode;
 	while(position--)
-		pList->headerNode->data = pList->headerNode->pLink;
-//	free
+		temp = temp->pLink;
+	delnode = temp->pLink;
+	temp->pLink = temp->pLink->pLink;
+	free(delnode);
+	pList->currentElementCount--;
 }
 
 ListNode* getLLElement(LinkedList* pList, int position)
 {
-	while(position--)
-		pList->headerNode->data = pList->headerNode->pLink;
-	return (pList->headerNode);
+	ListNode *temp;
 
+	if(!pList)
+		return (NULL);
+	if (position < 0 || position >= pList->currentElementCount)
+		return (NULL);
+	temp = &pList->headerNode;
+	position++;
+	while(position--)
+		temp = temp->pLink;
+	return (temp);
 }
 
 void clearLinkedList(LinkedList* pList)
 {
-	while(pList->headerNode->data)
-	{
-		pList->headerNode->data = NULL;
-		pList->headerNode->data = pList->headerNode->pLink;
-		free
-	}
+	ListNode *temp;
+
+	if(!pList)
+		return (NULL);
+	while(pList->currentElementCount > 0)
+		removeLLElement(pList, 0);
 }
 
 int getLinkedListLength(LinkedList* pList)
 {
-	int length = 0;
-
-	while(pList)
-	{
-		pList->headerNode = pList->headerNode->pLink;
-		length++;
-	}
-	return (length);
+	if(!pList)
+		return (NULL);
+	return (pList->currentElementCount);
 }
 
-void deleteLinkedList(LinkedList* pList);
+void deleteLinkedList(LinkedList* pList)
+{
+	if(!pList)
+		return (NULL);
+	clearLinkedList(pList);
+	free(pList);
+}
