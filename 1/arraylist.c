@@ -3,6 +3,8 @@
 #include <stdlib.h> //malloc
 #include <stdio.h> //printf
 
+//
+
 ArrayList* createArrayList(int maxElementCount)
 {	
 	ArrayList *array;
@@ -11,12 +13,17 @@ ArrayList* createArrayList(int maxElementCount)
 		return (NULL);
 	if (!(array = (ArrayList *)malloc(sizeof(ArrayList))))
 		return (NULL);
-	//array로 선언을하고 malloc없이 &array반환하는것은 불가능한지!
+	//array로 선언을하고 malloc없이 &array반환하는것은 불가능한지! 
+	//-> 그렇게하면 함수가 끝나면 value값이 날라가지 않나요?
 	array->currentElementCount = 0;
 	array->maxElementCount = maxElementCount; 
 	if (!(array->pElement = (ArrayListNode *)malloc(sizeof(ArrayListNode) * array->maxElementCount)))
 		return (NULL);
 	//pElement에 0으로 채워져야하나요?
+	//-> 네 쓰레기값보단 0으로 처리하는게 좋다 생각합니다
+	//-> 0을 넣으려면 구분이 안되지 않나요? 그리고 current변수가 있기도 하고 초기화는 안해도 된다 생각합니다
+	//->변수가 들어있는지 아닌지 구분하는 함수 (할당시++ 삭제시--)
+
 	return (array);
 }
 
@@ -24,6 +31,7 @@ void deleteArrayList(ArrayList* pList)
 {
 	if (!pList)
 		return (NULL);
+	//mki: clearArrayList
 	free(pList->pElement);
 	free(pList);
 }
@@ -45,8 +53,10 @@ int addALElement(ArrayList* pList, int position, ArrayListNode element)
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
+	//mki: pList->max <= pList->current
 	if (isArrayListFull(pList))
 		return (FALSE);
+	//yongckim: JAVA에서는 새롭게 할당해서 끼워넣어주는데 구현할땐 예외처리를 하라 하셨음
 	while (i > position)
 	{
 		pList->pElement[i] = pList->pElement[i - 1];
