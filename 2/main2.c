@@ -6,20 +6,26 @@
 /*   By: yeju <yeju@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:52:25 by sujilee           #+#    #+#             */
-/*   Updated: 2021/11/25 16:34:48 by yeju             ###   ########.fr       */
+/*   Updated: 2021/11/25 16:07:30 by yeju             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "linkedlist.h"
+#include "doublylist.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_list(ListNode *curr)
+void print_list(DoublyList* pList)
 {
-	while(curr)
+	DoublyListNode *tmp;
+
+	if(!pList)
+		return ;
+	tmp = &(pList->headerNode);
+	for (int i = 0; i < pList->currentElementCount; i++)
 	{
-		printf("%d\n", curr->data);
-		curr = curr->pLink;
+		
+		printf("%d\n", tmp->data);
+		tmp = tmp->pRLink;
 	}
 }
 
@@ -28,11 +34,11 @@ int		main(void)
 	int len = 0;
 	int position = 0;
 	char c;
-	LinkedList *temp;
-	ListNode *curr;
-	ListNode node0 = {0, 0};
+	DoublyList *temp;
+	DoublyListNode *curr;
+	DoublyListNode node0 = {0, 0, 0};
 
-	temp = createLinkedList();
+	temp = createDoublyList();
 	
 	while(1)
 	{
@@ -43,36 +49,37 @@ int		main(void)
 		case 'A':
 			printf("data, position: ");
 			scanf("%d %d", &(node0.data), &position);
-			addLLElement(temp, position, node0);
+			addDLElement(temp, position, node0);
 			break;
 		case 'R':
 			printf("position: ");
 			scanf("%d", &position);
-			removeLLElement(temp, position);
+			removeDLElement(temp, position);
 			break;
 		case 'G':
 			printf("position: ");
 			scanf("%d", &position);
-			curr = getLLElement(temp, position);
+			curr = getDLElement(temp, position);
 			printf("%d\n", curr->data);
 			break;
 		case 'P':
-			print_list(temp->headerNode.pLink);
+			print_list(temp);
 			break;
 		case 'L':
-			len = getLinkedListLength(temp);
+			len = getDoublyListLength(temp);
 			printf("%d\n", len);
+			break;
 		case 'C':
-			clearLinkedList(temp);
+			clearDoublyList(temp);
 			break;
 		case 'D':
-			deleteLinkedList(temp);
+			deleteDoublyList(temp);
 			break;
 		default:
 			break;
 		}
 	}
 	if(temp)
-		deleteLinkedList(temp);
+		deleteDoublyList(temp);
 	system("leaks a.out");
 }

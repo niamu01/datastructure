@@ -1,21 +1,7 @@
 #include "doublylist.h"
 #include <string.h> //NULL
 #include <stdlib.h> //malloc
-
-typedef struct DoublyListNodeType
-{
-	int data;
-	struct DoublyListNodeType* pLLink;
-	struct DoublyListNodeType* pRLink;
-} DoublyListNode;
-
-typedef struct DoublyListType
-{
-	int	currentElementCount;		// 현재 저장된 원소의 개수
-	DoublyListNode	headerNode;		// 헤더 노드(Header Node)
-} DoublyList;
-
-/*------------------------------------코드-부분------------------------------------*/
+#include <stdio.h> //printf
 
 DoublyList* createDoublyList() //이중연결리스트
 {
@@ -23,40 +9,129 @@ DoublyList* createDoublyList() //이중연결리스트
 
 	if (!(Dlist = (DoublyList *)malloc(sizeof(DoublyList))))
 		return (NULL);
-	Dlist->headerNode.data = NULL;
+	Dlist->headerNode.data = 0;
 	Dlist->headerNode.pLLink = NULL;
 	Dlist->headerNode.pRLink = NULL;
 	Dlist->currentElementCount = 0;
 	return (Dlist);
-//모든 요소를 초기화(?) & 구조체 malloc
-//1강 linkedlist 그대로 들고옴
 }
 
-void deleteDoublyList(DoublyList* pList) //이중연결리스트 지우기
+void deleteDoublyList(DoublyList* pList)
 {
 	if(!pList)
-		return (NULL);
+		return;
 	clearDoublyList(pList);
 	free(pList);
-//1강 linkedlist 그대로 들고옴
 }
 
-int addDLElement(DoublyList* pList, int position, DoublyListNode element); //이중연결리스트에 인자 추가
+int addDLElement(DoublyList* pList, int position, DoublyListNode element)
+{
+	DoublyListNode *prev;
+	DoublyListNode *new;
+	DoublyListNode *next;
+
+	if(!pList)
+		return (FALSE);
+	if (position < 0 || position > pList->currentElementCount)
+		return (FALSE);
+	
+	if (pList->currentElementCount == 0)
+	{
+		pList->headerNode = element;
+		pList->headerNode.pRLink = &(pList->headerNode);
+		pList->headerNode.pLLink = &(pList->headerNode);
+		pList->currentElementCount++;
+		return (TRUE);
+	}
+	if (!(new = (DoublyListNode *)malloc(sizeof(DoublyListNode))))
+		return (FALSE);
+	*new = element;
+	new->pLLink = NULL;
+	new->pRLink = NULL;
+	if (position == 0)
+	{
+		DoublyListNode *tmp;
+		*tmp = pList->headerNode;
+		new->pLLink = tmp->pLLink;
+		tmp->pLLink->pRLink = new;
+		tmp->pLLink = new;
+		new->pRLink = tmp;
+		pList->headerNode = *new;
+	}
+	else
+	{
+		prev = &(pList->headerNode);
+		while(--position)
+			prev = prev->pRLink;
+		next = prev->pRLink;
+		new->pRLink = prev->pRLink;
+		prev->pRLink = new;
+		new->pLLink = next->pLLink;
+		next->pLLink = new;
+	}
+	pList->currentElementCount++;
+	return (TRUE);
+}
 
 int removeDLElement(DoublyList* pList, int position) //이중연결리스트에 인자 삭제
 {
 	DoublyListNode	*prev;
+	DoublyListNode *next;
 	DoublyListNode	*delnode;
 
 	if(!pList)
-		return (NULL);
-	if(position < 0 || po)
+		return (FALSE);
+	if (position < 0 || position > pList->currentElementCount)
+		return (FALSE);
+	while(position--)
+		prev = prev->pRLink;
+	delnode = prev->pRLink;
+	next = delnode->pRLink;
+	prev->pRLink = delnode->pRLink;
+	next->pLLink = delnode->pLLink;
+	free(delnode);
+	pList->currentElementCount--;
+	return (TRUE);
 }
 
-void clearDoublyList(DoublyList* pList); //이중연결리스트 비우기
+void clearDoublyList(DoublyList* pList) //이중연결리스트 비우기
+{
+	while(pList->currentElementCount > 0)
+		removeDLElement(pList, 0);
+}
 
-int getDoublyListLength(DoublyList* pList); //이중연결리스트 길이 재기
+int getDoublyListLength(DoublyList* pList)
+{
+	if (!pList)
+		return (FALSE);
+	return (pList->currentElementCount);
+}
 
-DoublyListNode* getDLElement(DoublyList* pList, int position); //이중연결리스트 인자값
+DoublyListNode* getDLElement(DoublyList* pList, int position)
+{
+	DoublyListNode *prev;
 
-void displayDoublyList(DoublyList* pList); //이중연결리스트 요소 출력
+	if(!pList)
+		return (NULL);
+	if (position < 0 || position >= pList->currentElementCount)
+		return (NULL);
+	prev = &(pList->headerNode);
+	position++;
+	while(position--)
+		prev = prev->pRLink;
+	return (prev);
+}
+
+void displayDoublyList(DoublyList* pList)
+{
+	DoublyListNode *tmp;
+
+	if(!pList)
+		return ;
+	tmp = &(pList->headerNode);
+	for (int i = 0; i < pList->currentElementCount; i++)
+	{
+		tmp = tmp->pRLink;
+		printf("%d\n", tmp->data);
+	}
+}

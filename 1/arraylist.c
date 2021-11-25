@@ -1,4 +1,4 @@
-#include "./1/arraylist.h"
+#include "arraylist.h"
 #include <string.h> //NULL
 #include <stdlib.h> //malloc
 #include <stdio.h> //printf

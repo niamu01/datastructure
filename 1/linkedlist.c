@@ -1,4 +1,4 @@
-#include "./1/linkedlist.h"
+#include "linkedlist.h"
 #include <string.h> //NULL
 #include <stdlib.h> //malloc
 
@@ -72,8 +72,6 @@ ListNode* getLLElement(LinkedList* pList, int position)
 
 void clearLinkedList(LinkedList* pList)
 {
-	ListNode *prev;
-
 	if(!pList)
 		return;
 	while(pList->currentElementCount > 0)
