@@ -10,8 +10,8 @@ DoublyList* createDoublyList() //이중연결리스트
 	if (!(Dlist = (DoublyList *)malloc(sizeof(DoublyList))))
 		return (NULL);
 	Dlist->headerNode.data = 0;
-	Dlist->headerNode.pLLink = NULL;
-	Dlist->headerNode.pRLink = NULL;
+	Dlist->headerNode.pLLink = &(Dlist->headerNode);
+	Dlist->headerNode.pRLink = &(Dlist->headerNode);
 	Dlist->currentElementCount = 0;
 	return (Dlist);
 }
@@ -34,41 +34,18 @@ int addDLElement(DoublyList* pList, int position, DoublyListNode element)
 		return (FALSE);
 	if (position < 0 || position > pList->currentElementCount)
 		return (FALSE);
-	
-	if (pList->currentElementCount == 0)
-	{
-		pList->headerNode = element;
-		pList->headerNode.pRLink = &(pList->headerNode);
-		pList->headerNode.pLLink = &(pList->headerNode);
-		pList->currentElementCount++;
-		return (TRUE);
-	}
 	if (!(new = (DoublyListNode *)malloc(sizeof(DoublyListNode))))
 		return (FALSE);
 	*new = element;
 	new->pLLink = NULL;
 	new->pRLink = NULL;
-	if (position == 0)
-	{
-		DoublyListNode *tmp;
-		*tmp = pList->headerNode;
-		new->pLLink = tmp->pLLink;
-		tmp->pLLink->pRLink = new;
-		tmp->pLLink = new;
-		new->pRLink = tmp;
-		pList->headerNode = *new;
-	}
-	else
-	{
-		prev = &(pList->headerNode);
-		while(--position)
-			prev = prev->pRLink;
-		next = prev->pRLink;
-		new->pRLink = prev->pRLink;
-		prev->pRLink = new;
-		new->pLLink = next->pLLink;
-		next->pLLink = new;
-	}
+	prev = &(pList->headerNode);
+	while(position--)
+		prev = prev->pRLink;
+	new->pRLink = prev->pRLink;
+	prev->pRLink = new;
+	new->pLLink = prev;
+	new->pRLink->pLLink = new;
 	pList->currentElementCount++;
 	return (TRUE);
 }

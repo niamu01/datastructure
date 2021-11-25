@@ -6,7 +6,7 @@
 /*   By: yeju <yeju@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:52:25 by sujilee           #+#    #+#             */
-/*   Updated: 2021/11/25 16:07:30 by yeju             ###   ########.fr       */
+/*   Updated: 2021/11/25 17:49:54 by yeju             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void print_list(DoublyList* pList)
 	tmp = &(pList->headerNode);
 	for (int i = 0; i < pList->currentElementCount; i++)
 	{
-		
-		printf("%d\n", tmp->data);
 		tmp = tmp->pRLink;
+		printf("%d\n", tmp->data);
+		
 	}
 }
 
