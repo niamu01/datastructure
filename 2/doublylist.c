@@ -28,7 +28,6 @@ int addDLElement(DoublyList* pList, int position, DoublyListNode element)
 {
 	DoublyListNode *prev;
 	DoublyListNode *new;
-	DoublyListNode *next;
 
 	if(!pList)
 		return (FALSE);
@@ -53,19 +52,18 @@ int addDLElement(DoublyList* pList, int position, DoublyListNode element)
 int removeDLElement(DoublyList* pList, int position) //이중연결리스트에 인자 삭제
 {
 	DoublyListNode	*prev;
-	DoublyListNode *next;
 	DoublyListNode	*delnode;
 
 	if(!pList)
 		return (FALSE);
 	if (position < 0 || position > pList->currentElementCount)
 		return (FALSE);
+	prev = &(pList->headerNode);
 	while(position--)
 		prev = prev->pRLink;
 	delnode = prev->pRLink;
-	next = delnode->pRLink;
 	prev->pRLink = delnode->pRLink;
-	next->pLLink = delnode->pLLink;
+	delnode->pRLink->pLLink = delnode->pLLink;
 	free(delnode);
 	pList->currentElementCount--;
 	return (TRUE);
