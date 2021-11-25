@@ -6,7 +6,7 @@
 /*   By: yeju <yeju@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:52:25 by sujilee           #+#    #+#             */
-/*   Updated: 2021/11/25 16:34:48 by yeju             ###   ########.fr       */
+/*   Updated: 2021/11/25 18:46:37 by yeju             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,17 @@ int		main(void)
 		case 'L':
 			len = getLinkedListLength(temp);
 			printf("%d\n", len);
+			break;
 		case 'C':
 			clearLinkedList(temp);
 			break;
 		case 'D':
 			deleteLinkedList(temp);
+			break;
+		case 'V':
+			reverseLinkedList(temp);
+			print_list(temp->headerNode.pLink);
+			reverseLinkedList(temp);
 			break;
 		default:
 			break;

@@ -22,7 +22,8 @@ void clearLinkedList(LinkedList* pList);
 int getLinkedListLength(LinkedList* pList);
 void deleteLinkedList(LinkedList* pList);
 
-void print_node(ListNode *curr);
+void print_list(ListNode *curr);
+//void reverseLinkedList(LinkedList* pList);
 #endif
 
 #ifndef _COMMON_LIST_DEF_

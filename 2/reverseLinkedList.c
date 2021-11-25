@@ -1,3 +1,6 @@
+#include "../1/linkedlist.h"
+#include <string.h> //NULL
+
 void reverseLinkedList(LinkedList* pList) 
 {
     ListNode *pNode = NULL, *pCurrentNode = NULL, *pPrevNode = NULL;
