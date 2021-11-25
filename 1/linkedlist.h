@@ -9,8 +9,8 @@ typedef struct ListNodeType
 
 typedef struct LinkedListType
 {
-	int currentElementCount;	// ÇöÀç ÀúÀåµÈ ¿ø¼ÒÀÇ °³¼ö
-	ListNode headerNode;		// Çì´õ ³ëµå(Header Node)
+	int currentElementCount;	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	ListNode headerNode;		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½(Header Node)
 } LinkedList;
 
 LinkedList* createLinkedList();
@@ -21,6 +21,8 @@ ListNode* getLLElement(LinkedList* pList, int position);
 void clearLinkedList(LinkedList* pList);
 int getLinkedListLength(LinkedList* pList);
 void deleteLinkedList(LinkedList* pList);
+
+void print_node(ListNode *curr);
 #endif
 
 #ifndef _COMMON_LIST_DEF_

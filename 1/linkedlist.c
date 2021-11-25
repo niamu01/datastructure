@@ -1,8 +1,6 @@
-#include "linkedlist.h"
+#include "./1/linkedlist.h"
 #include <string.h> //NULL
 #include <stdlib.h> //malloc
-
-//headernode는 변경되면 안되는 것인지?
 
 LinkedList* createLinkedList()
 {
@@ -10,45 +8,48 @@ LinkedList* createLinkedList()
 
 	if (!(list = (LinkedList *)malloc(sizeof(LinkedList))))
 		return (NULL);
-	list->headerNode.data = NULL;
-	list->headerNode.pLink = NULL;
+	list->headerNode.data = 0;
+	list->headerNode.pLink = 0;
 	list->currentElementCount = 0;
-	
 	return (list);
 }
 
 int addLLElement(LinkedList* pList, int position, ListNode element)
-//element를 nownode에 넣어 list단위에서 pLink를 관리하면 편함
 {
-	ListNode *temp;
+	ListNode *prev;
+	ListNode *newE;
 
-	if(!pList || &element == NULL)
-		return (NULL);
+	if(!pList)
+		return (FALSE);
 	if (position < 0 || position > pList->currentElementCount)
-		return (NULL);
-	temp = &(pList->headerNode);
+		return (FALSE);
+	if (!(newE = (ListNode *)malloc(sizeof(ListNode))))
+		return (FALSE);
+	*newE = element;
+	newE->pLink = NULL;
+	prev = &(pList->headerNode);
 	while(position--)
-		temp = temp->pLink;
-	element.pLink = temp->pLink->pLink;
-	temp->pLink = &element;
+		prev = prev->pLink;
+	newE->pLink = prev->pLink;
+	prev->pLink = newE;
 	pList->currentElementCount++;
 	return (TRUE);
 }
 
 int removeLLElement(LinkedList* pList, int position)
 {
-	ListNode *temp;
+	ListNode *prev;
 	ListNode *delnode;
 
 	if(!pList)
-		return (NULL);
+		return (FALSE);
 	if (position < 0 || position >= pList->currentElementCount)
-		return (NULL);
-	temp = &(pList->headerNode);
+		return (FALSE);
+	prev = &(pList->headerNode);
 	while(position--)
-		temp = temp->pLink;
-	delnode = temp->pLink;
-	temp->pLink = delnode->pLink;
+		prev = prev->pLink;
+	delnode = prev->pLink;
+	prev->pLink = delnode->pLink;
 	free(delnode);
 	pList->currentElementCount--;
 	return (TRUE);
@@ -56,26 +57,25 @@ int removeLLElement(LinkedList* pList, int position)
 
 ListNode* getLLElement(LinkedList* pList, int position)
 {
-	ListNode *temp;
+	ListNode *prev;
 
 	if(!pList)
 		return (NULL);
 	if (position < 0 || position >= pList->currentElementCount)
 		return (NULL);
-	temp = &(pList->headerNode);
+	prev = &(pList->headerNode);
 	position++;
 	while(position--)
-		temp = temp->pLink;
-	return (temp);
-	//리턴값을 따로 선언해야하나요?
+		prev = prev->pLink;
+	return (prev);
 }
 
 void clearLinkedList(LinkedList* pList)
 {
-	ListNode *temp;
+	ListNode *prev;
 
 	if(!pList)
-		return (NULL);
+		return;
 	while(pList->currentElementCount > 0)
 		removeLLElement(pList, 0);
 }
@@ -83,14 +83,14 @@ void clearLinkedList(LinkedList* pList)
 int getLinkedListLength(LinkedList* pList)
 {
 	if(!pList)
-		return (NULL);
+		return (FALSE);
 	return (pList->currentElementCount);
 }
 
 void deleteLinkedList(LinkedList* pList)
 {
 	if(!pList)
-		return (NULL);
+		return;
 	clearLinkedList(pList);
 	free(pList);
 }
