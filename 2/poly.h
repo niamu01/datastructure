@@ -1,5 +1,9 @@
-#ifndef _LINKEDLIST_
-#define _LINKEDLIST_
+#ifndef _POLY_H_
+#define _POLY_H_
+
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct ListNodeType
 {
@@ -24,11 +28,11 @@ int getLinkedListLength(LinkedList* pList);
 void deleteLinkedList(LinkedList* pList);
 
 /*poly*/
+int addPolyNodeLast(LinkedList *pList, float coef, int degree);
+void addPoly(LinkedList *A, LinkedList *B, LinkedList *C);
 
 void print_list(ListNode *curr);
 
-/*reverse*/
-void reverseLinkedList(LinkedList* pList);
 #endif
 
 #ifndef _COMMON_LIST_DEF_

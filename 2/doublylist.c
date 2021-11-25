@@ -1,7 +1,4 @@
 #include "doublylist.h"
-#include <string.h> //NULL
-#include <stdlib.h> //malloc
-#include <stdio.h> //printf
 
 DoublyList* createDoublyList() //이중연결리스트
 {

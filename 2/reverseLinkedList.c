@@ -1,5 +1,4 @@
-#include "../1/linkedlist.h"
-#include <string.h> //NULL
+#include "reverse_list.h"
 
 void reverseLinkedList(LinkedList* pList) 
 {
