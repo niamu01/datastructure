@@ -80,6 +80,7 @@ int getDoublyListLength(DoublyList* pList)
 }
 
 DoublyListNode* getDLElement(DoublyList* pList, int position)
+//포지션/2을 현재 원소 개수와 비교해 앞에서부터, 뒤에서부터 탐색하는걸 결정
 {
 	DoublyListNode *prev;
 

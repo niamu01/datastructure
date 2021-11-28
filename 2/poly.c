@@ -17,6 +17,7 @@ int addPolyNodeLast(LinkedList *pList, float coef, int degree)
 }
 
 void addPoly(LinkedList *A, LinkedList *B, LinkedList *C)
+//둘 다 NULL인 경우
 {
 	ListNode *pA = A->headerNode.pLink;
 	ListNode *pB = B->headerNode.pLink;
@@ -63,9 +64,10 @@ int main()
 	LinkedList *B = createLinkedList();
 	LinkedList *C = createLinkedList();
 
-	addPolyNodeLast(A, 6, 6);
-	addPolyNodeLast(A, 4, 5);
-	addPolyNodeLast(A, 2, 2);
+//	addPolyNodeLast(A, 6, 6);
+//	addPolyNodeLast(A, 4, 5);
+//	addPolyNodeLast(A, 2, 2);
+	addPolyNodeLast(A, 0, 0);
 	
 	addPolyNodeLast(B, 1, 5);
 	addPolyNodeLast(B, 2, 4);
@@ -73,5 +75,12 @@ int main()
 	addPolyNodeLast(B, 4, 0);
 	
 	addPoly(A, B, C);
+
+	print_list(&A->headerNode);
+	printf("\n");
+	print_list(&B->headerNode);
+	printf("\n");
+	print_list(&C->headerNode);
+	printf("\n");
 	return 0;
 }
