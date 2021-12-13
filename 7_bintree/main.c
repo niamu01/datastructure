@@ -17,7 +17,6 @@ int main(void)
     BinTreeNode L = {'L', NULL, NULL};
     BinTreeNode M = {'M', NULL, NULL};
 
-    tree = makeBinTree(&A);
     insertLeftChildNodeBT(&D, &H);
     insertRightChildNodeBT(&D, &I);
     insertLeftChildNodeBT(&E, &J);
@@ -30,6 +29,7 @@ int main(void)
     insertLeftChildNodeBT(&C, &F);
     insertLeftChildNodeBT(&A, &B);
     insertRightChildNodeBT(&A, &C);
+    tree = makeBinTree(&A);
     BinTreeNode *node;
 
     node = getRootNodeBT(tree);
