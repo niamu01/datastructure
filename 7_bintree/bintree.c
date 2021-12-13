@@ -3,47 +3,28 @@
 BinTree* makeBinTree(BinTreeNode *rootNode)
 {
     BinTree *tree;
-    BinTreeNode *root_node;
-
+    
     tree = (BinTree *)malloc(sizeof(BinTree));
     if (!tree)
         return NULL;
-    root_node = (BinTreeNode *)malloc(sizeof(BinTreeNode));
-    if (!root_node)
-        return NULL;
-    root_node = rootNode;
-//    *root_node = rootNode;
-
-    tree->pRootNode = root_node;
+    tree->pRootNode = rootNode;
     return (tree);
 }
 
 BinTreeNode* insertLeftChildNodeBT(BinTreeNode* pParentNode, BinTreeNode *element)
 {
-    BinTreeNode *lnode;
-
     if (!pParentNode)
         return (FALSE);
-    lnode = (BinTreeNode *)malloc(sizeof(BinTreeNode));
-    if (!lnode)
-        return (FALSE);
-    (lnode) = element;
-    pParentNode->pLeftChild = lnode;
-    return (lnode);
+    pParentNode->pLeftChild = element;
+    return (element);
 }
 
 BinTreeNode* insertRightChildNodeBT(BinTreeNode* pParentNode, BinTreeNode *element)
 {
-    BinTreeNode *rnode;
-
     if (!pParentNode)
         return (FALSE);
-    rnode = (BinTreeNode *)malloc(sizeof(BinTreeNode));
-    if (!rnode)
-        return (FALSE);
-    (rnode) = element;
-    pParentNode->pRightChild = rnode;
-    return (rnode);
+    pParentNode->pRightChild = element;
+    return (element);
 }
 
 BinTreeNode* getRootNodeBT(BinTree* pBinTree)
@@ -59,6 +40,7 @@ BinTreeNode* getLeftChildNodeBT(BinTreeNode* pNode)
         return (FALSE);
     return(pNode->pLeftChild);
 }
+
 BinTreeNode* getRightChildNodeBT(BinTreeNode* pNode)
 {
     if(!pNode || !pNode->pRightChild)
@@ -76,18 +58,15 @@ void deleteBinTree(BinTree* pBinTree)
     if(!rootNode)
         return ;
     deleteBinTreeNode(rootNode);
+    free(pBinTree);
 }
 
 void deleteBinTreeNode(BinTreeNode* pNode)
 {
-    if(pNode)
-        return ;
     if(pNode->pLeftChild)
         deleteBinTreeNode(pNode->pLeftChild);
     if(pNode->pRightChild)
         deleteBinTreeNode(pNode->pRightChild);
-    //
     free(pNode);
     pNode = NULL;
-    //
 }
