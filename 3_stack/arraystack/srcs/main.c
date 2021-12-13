@@ -47,6 +47,7 @@ int		main(void)
 		case 'D':
 			delete_test();
 			system("leaks arraystack");
+			//leaks은 같은함수면 못잡는 문제가 있어 이렇게 함 (valgrid)
 			break;
 		case 'Y':
 			displayStack(as);
