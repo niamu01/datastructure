@@ -1,4 +1,6 @@
 #include "linkeddeque.h"
+#include "simutil.h"
+#include "simdef.h"
 #include "unistd.h"
 
 static void displayDQ(LinkedDeque* pDeque)
@@ -16,9 +18,20 @@ static void displayDQ(LinkedDeque* pDeque)
 
 int     test()
 {
-    LinkedDeque *pDeque;
+    LinkedDeque *pQueue;
     int input = 0;
 
+    insertCutomer(0, 3, pQueue);
+    insertCutomer(2, 2, pQueue);
+    insertCutomer(4, 1, pQueue);
+    insertCutomer(6, 1, pQueue);
+    insertCutomer(8, 3, pQueue);
+
+    for (currenttime = 0; currenttime < endTime; currenttime++)
+    {
+        processArrival(currenttime, pArrivalQueue, pWaitQueue);
+    }
+    
     pDeque = createLinkedDeque();
     while (1)
     {
