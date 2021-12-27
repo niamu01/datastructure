@@ -49,14 +49,15 @@ void test()
 		addVertexAG(Graph, i);
 	}
 	//여기서 엣지 추가.
-	addEdgewithWeightAG(Graph, 0, 1, 3);
-	addEdgewithWeightAG(Graph, 0, 3, 15);
-	addEdgewithWeightAG(Graph, 0, 2, 3);
-	addEdgewithWeightAG(Graph, 1, 2, 3);
-	addEdgewithWeightAG(Graph, 1, 4, 9);
-	addEdgewithWeightAG(Graph, 2, 3, 26);
-	addEdgewithWeightAG(Graph, 2, 4, 6);
-	addEdgewithWeightAG(Graph, 3, 4, 7);
+	addEdgewithWeightAG(Graph, 0, 1, 5);
+	addEdgewithWeightAG(Graph, 0, 2, 4);
+	addEdgewithWeightAG(Graph, 1, 3, 7);
+	addEdgewithWeightAG(Graph, 1, 2, 2);
+	addEdgewithWeightAG(Graph, 2, 3, 6);
+	addEdgewithWeightAG(Graph, 3, 5, 8);
+	addEdgewithWeightAG(Graph, 2, 4, 11);
+	addEdgewithWeightAG(Graph, 3, 4, 3);
+	addEdgewithWeightAG(Graph, 5, 4, 5);
 
 	ArrayGraph *MST = prim(Graph, 0);//prim함수에서 원래 그래프를 받아 edge를 추가. MST반환
 

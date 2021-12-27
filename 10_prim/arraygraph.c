@@ -301,22 +301,22 @@ void displayArrayGraph(ArrayGraph* pGraph)
 	return ;
 }
 
-void test1()
-{
-    printf("UNDIRECTED WITH 가중치 없음\n\n");
-    ArrayGraph *pGraph = createArrayGraph(8);
-    for(int i = 0; i < 8; i++)
-    {
-        addVertexAG(pGraph, i);
-    }
-    addEdgeAG(pGraph, 0, 1);
-    addEdgeAG(pGraph, 0, 2);
-    addEdgeAG(pGraph, 1, 3);
-    addEdgeAG(pGraph, 1, 4);
-    addEdgeAG(pGraph, 3, 7);
-    addEdgeAG(pGraph, 4, 5);
-    addEdgeAG(pGraph, 5, 2);
-    addEdgeAG(pGraph, 2, 6);
-		displayArrayGraph(pGraph);
-    deleteArrayGraph(pGraph);
-}
+//void test1()
+//{
+//    printf("UNDIRECTED WITH 가중치 없음\n\n");
+//    ArrayGraph *pGraph = createArrayGraph(8);
+//    for(int i = 0; i < 8; i++)
+//    {
+//        addVertexAG(pGraph, i);
+//    }
+//    addEdgeAG(pGraph, 0, 1);
+//    addEdgeAG(pGraph, 0, 2);
+//    addEdgeAG(pGraph, 1, 3);
+//    addEdgeAG(pGraph, 1, 4);
+//    addEdgeAG(pGraph, 3, 7);
+//    addEdgeAG(pGraph, 4, 5);
+//    addEdgeAG(pGraph, 5, 2);
+//    addEdgeAG(pGraph, 2, 6);
+//		displayArrayGraph(pGraph);
+//    deleteArrayGraph(pGraph);
+//}
