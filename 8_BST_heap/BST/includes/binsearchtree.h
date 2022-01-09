@@ -35,10 +35,20 @@ typedef struct Queue
     QNode *rear;
 }QueueList;
 
+//levelOrder
+QueueList* creatQueue();
+void deleteQueue(QueueList *Queue);
+void enque(QueueList *Queue, BinSearchTreeNode *data);
+void levelOrderTraversalBinTree(BinSearchTreeNode* pNode);
+
+//+@
+BinSearchTreeNode *createNode(BinSearchTreeNode element);
+void    link_PC_BST(BinSearchTreeNode *parent, BinSearchTreeNode *child);
+
+//Basic
 BinSearchTree* createBinSearchTree();
 int insertElementBST(BinSearchTree* pBinSearchTree, BinSearchTreeNode element);
 int deleteElementBST(BinSearchTree* pBinSearchTree, int key);
-BinSearchTreeNode* searchRecursiveBST(BinSearchTree* pBinSearchTree, int key);
 BinSearchTreeNode* searchInternalRecursiveBST(BinSearchTreeNode* pTreeNode, int key);
 BinSearchTreeNode* searchBST(BinSearchTree* pBinSearchTree, int key);
 void deleteBinSearchTree(BinSearchTree* pBinSearchTree);
